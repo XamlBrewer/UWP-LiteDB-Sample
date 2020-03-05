@@ -14,7 +14,7 @@
   <mp:PhoneIdentity PhoneProductId="afc5a177-2ca6-46c6-8af1-1a3bfd312a60" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>XamlBrewer.WinUI.LiteDBSample</DisplayName>
+    <DisplayName>XAML Brewer UWP LiteDB Sample</DisplayName>
     <PublisherDisplayName>Diederik</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -30,15 +30,15 @@
   <Applications>
     <Application Id="App"
       Executable="$targetnametoken$.exe"
-      EntryPoint="XamlBrewer.WinUI.LiteDBSample.App">
+      EntryPoint="XamlBrewer.UWP.LiteDBSample.App">
       <uap:VisualElements
-        DisplayName="XamlBrewer.WinUI.LiteDBSample"
+        DisplayName="XAML Brewer UWP LiteDB Sample"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
-        Description="XamlBrewer.WinUI.LiteDBSample"
+        Description="XAML Brewer UWP LiteDB Sample"
         BackgroundColor="transparent">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
-        <uap:SplashScreen Image="Assets\SplashScreen.png" />
+        <uap:SplashScreen Image="Assets\SplashScreen.png"  BackgroundColor="lightSlateGray"/>
       </uap:VisualElements>
     </Application>
   </Applications>
