@@ -1,11 +1,13 @@
-﻿namespace XamlBrewer.UWP.LiteDBSample.Entities
+﻿using LiteDB;
+
+namespace XamlBrewer.UWP.LiteDBSample.Entities
 {
     public class Actor
     {
-        public int Id { get; set; }
+        [BsonId]
+        public int ActorId { get; set; }
 
         public string Name { get; set; }
-
 
         public static Actor[] SampleData
         {
@@ -15,15 +17,15 @@
                     {
                         new Actor
                         {
-                            Name = "Simone Missick"
+                            Name = "Chris Conner"
                         },
                         new Actor
                         {
-                            Name = "Lela Loren"
+                            Name = "Renée Elise Goldsberry"
                         },
                         new Actor
                         {
-                            Name = "Simone Missick"
+                            Name = "Will Yun Lee"
                         }
                     };
             }

@@ -1,7 +1,11 @@
-﻿namespace XamlBrewer.UWP.LiteDBSample.Entities
+﻿using LiteDB;
+
+namespace XamlBrewer.UWP.LiteDBSample.Entities
 {
     public class Series
     {
+        public int Id { get; set; }
+
         public string Name { get; set; }
 
         public string Creator { get; set; }
@@ -10,9 +14,10 @@
 
         public string[] Genres { get; set; }
 
-        public string[] Cast { get; set; }
-
         public Season[] Seasons { get; set; }
+
+        [BsonRef("actors")]
+        public Actor[] Cast { get; set; }
 
         public static Series[] SampleData
         {
@@ -219,7 +224,7 @@
                                     {
                                     Sequence = 10,
                                     Title = "Crossing the Line",
-                                    Description = "Drivers — both legends and upstarts — focus on ending the year on a high note as the teams prepare for the season's final race at Abu Dhabi."
+                                    Description = "Drivers - both legends and upstarts - focus on ending the year on a high note as the teams prepare for the season's final race at Abu Dhabi."
                                     }
                                 }
                             },
@@ -250,7 +255,7 @@
                                     {
                                     Sequence = 4,
                                     Title = "Dark Days",
-                                    Description = "Lewis Hamilton and the Mercedes team — long dominant in Formula 1 — face a true test of mettle on a rain-soaked track at the German Grand Prix."
+                                    Description = "Lewis Hamilton and the Mercedes team - long dominant in Formula 1 - face a true test of mettle on a rain-soaked track at the German Grand Prix."
                                     },
                             new Episode
                                     {
@@ -268,7 +273,7 @@
                                     {
                                     Sequence = 7,
                                     Title = "Seeing Red",
-                                    Description = "Few — if any — teams have a history that can match Ferrari's. But not even the Prancing Horse is immune to a little interdriver drama."
+                                    Description = "Few - if any - teams have a history that can match Ferrari's. But not even the Prancing Horse is immune to a little interdriver drama."
                                     },
                                  new Episode
                                     {
@@ -286,7 +291,7 @@
                                     {
                                     Sequence = 10,
                                     Title = "Checkered Flag",
-                                    Description = "As the 2019 season winds down, upstart drivers — including Albon, Gasly and Sainz — compete for one last chance at a podium finish."
+                                    Description = "As the 2019 season winds down, upstart drivers - including Albon, Gasly and Sainz - compete for one last chance at a podium finish."
                                     }
                                 }
                             }

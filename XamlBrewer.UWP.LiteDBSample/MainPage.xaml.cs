@@ -7,6 +7,8 @@ using Windows.UI.Xaml.Controls;
 
 namespace XamlBrewer.UWP.LiteDBSample
 {
+    // This is not the code you're looking for.
+    // All the action is in the DataLayer class.
     public sealed partial class MainPage : Page
     {
         public MainPage()
@@ -37,7 +39,7 @@ namespace XamlBrewer.UWP.LiteDBSample
         private async void Initialize_Click(object sender, RoutedEventArgs e)
         {
             WriteLog("(Re)create database");
-            WriteLog("-------------------");
+            WriteLog("===================");
             await DataLayer.Reset();
             WriteLog("Done");
             WriteLog(" ");
@@ -46,8 +48,10 @@ namespace XamlBrewer.UWP.LiteDBSample
         private void GettingStarted_Click(object sender, RoutedEventArgs e)
         {
             WriteLog("Basic CRUD queries");
-            WriteLog("------------------");
-            WriteLog("Selecting all series:");
+            WriteLog("==================");
+            WriteLog(" ");
+            WriteLog("All series");
+            WriteLog("----------");
             var series = DataLayer.SelectAll();
             foreach (var serie in series)
             {
@@ -65,20 +69,25 @@ namespace XamlBrewer.UWP.LiteDBSample
                 }
             }
 
-            WriteLog("Selecting series with a 2018 season");
+            WriteLog(" ");
+            WriteLog("Series with a 2018 season");
+            WriteLog("-------------------------");
             series = DataLayer.SelectFromYear(2018);
             foreach (var serie in series)
             {
                 WriteLog($"* {serie.Name}");
             };
 
-            WriteLog("Selecting series with a 2020 season");
+            WriteLog(" ");
+            WriteLog("Series with a 2020 season");
+            WriteLog("-------------------------");
             series = DataLayer.SelectFromYear(2020);
             foreach (var serie in series)
             {
                 WriteLog($"* {serie.Name}");
             };
 
+            WriteLog(" ");
             WriteLog("Done");
             WriteLog(" ");
         }
@@ -86,21 +95,25 @@ namespace XamlBrewer.UWP.LiteDBSample
         private void InspectingInternals_Click(object sender, RoutedEventArgs e)
         {
             WriteLog("Inspecting metadata");
+            WriteLog("===================");
+            WriteLog(" ");
+            WriteLog("Database properties");
             WriteLog("-------------------");
-            WriteLog("Fetching database properties:");
             var props = DataLayer.SelectDatabaseProperties();
             foreach (var prop in props)
             {
                 WriteLog($"* {prop}");
             }
 
-            WriteLog("Fetching user collections:");
+            WriteLog(" ");
+            WriteLog("User collections");
+            WriteLog("----------------");
             var cols = DataLayer.SelectUserCollections();
             foreach (var col in cols)
             {
                 WriteLog($"* {col}");
             }
-
+            WriteLog(" ");
             WriteLog("Done");
             WriteLog(" ");
         }
@@ -108,35 +121,62 @@ namespace XamlBrewer.UWP.LiteDBSample
         private void AdvancedQueries_Click(object sender, RoutedEventArgs e)
         {
             WriteLog("Expression based queries");
-            WriteLog("------------------------");
-            WriteLog("Fetching all episodes from 2020 seasons:");
+            WriteLog("========================");
+            WriteLog(" ");
+            WriteLog("All episodes from 2020 seasons");
+            WriteLog("------------------------------");
             var seasons = DataLayer.Select2020Seasons();
             foreach (var season in seasons)
             {
                 WriteLog($"* {season}");
             }
 
-            WriteLog("Fetching all season finales:");
+            WriteLog(" ");
+            WriteLog("All season finales");
+            WriteLog("------------------");
             seasons = DataLayer.SelectSeasonFinales();
             foreach (var season in seasons)
             {
                 WriteLog($"* {season}");
             }
 
-            WriteLog("Fetching all episodes with 'fight':");
+            WriteLog(" ");
+            WriteLog("All episodes with 'fight' in their description");
+            WriteLog("----------------------------------------------");
             seasons = DataLayer.SelectFightEpisodes();
             foreach (var season in seasons)
             {
                 WriteLog($"* {season}");
             }
 
+            WriteLog(" ");
             WriteLog("Done");
             WriteLog(" ");
         }
 
         private void JoiningDocuments_Click(object sender, RoutedEventArgs e)
         {
+            WriteLog("Joining documents");
+            WriteLog("=================");
+            WriteLog(" ");
+            WriteLog("All series with their actor's names");
+            WriteLog("-----------------------------------");
+            var series = DataLayer.SelectWithActors();
+            foreach (var serie in series)
+            {
+                WriteLog($"* {serie.Name}");
+                if (serie.Cast != null && serie.Cast.Length > 0)
+                {
+                    foreach (var actor in serie.Cast)
+                    {
+                        WriteLog($"  * {actor.Name}");
+                    }
+                }
+            }
 
+            WriteLog(" ");
+            WriteLog("Done");
+            WriteLog(" ");
         }
 
         private void WriteLog(string message = "")

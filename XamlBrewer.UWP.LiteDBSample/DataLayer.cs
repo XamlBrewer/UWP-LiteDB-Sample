@@ -11,7 +11,7 @@ namespace XamlBrewer.UWP.LiteDBSample
     {
         public static Task Reset()
         {
-            return Task.Run(() =>
+            return Task.Run((System.Action)(() =>
             {
                 using (var db = MyDatabase)
                 {
@@ -20,25 +20,34 @@ namespace XamlBrewer.UWP.LiteDBSample
                     // col.DeleteMany(s => true);
 
                     // Get a collection (create it if it doesn't exist)
-                    var col = db.GetCollection<Series>("series");
+                    var seriesCollection = db.GetCollection<Series>("series");
 
                     // Index on Name.
-                    col.EnsureIndex(x => x.Name);
+                    seriesCollection.EnsureIndex(x => x.Name);
 
                     // Populate.
                     foreach (var series in Series.SampleData)
                     {
-                        col.Insert(series);
+                        seriesCollection.Insert(series);
                     }
 
+                    // Get Altered Carbon
+                    var ac = seriesCollection.FindOne(s => s.Name == "Altered Carbon");
+
                     db.DropCollection("actors");
-                    var actors = db.GetCollection<Actor>("actors");
+                    var actorsCollection = db.GetCollection<Actor>("actors");
                     foreach (var actor in Actor.SampleData)
                     {
-                        actors.Upsert(actor);
+                        actorsCollection.Upsert(actor);
+                        if (ac.Cast == null)
+                        {
+                            ac.Cast = new Actor[0];
+                        }
+                        ac.Cast = ac.Cast.Append(actor).ToArray();
+                        seriesCollection.Update(ac);
                     }
                 }
-            });
+            }));
         }
 
         public static List<Series> SelectAll()
@@ -72,6 +81,21 @@ namespace XamlBrewer.UWP.LiteDBSample
                 foreach (var item in doc.Keys)
                 {
                     yield return $"{item}: {doc[item]}";
+                }
+            }
+        }
+
+        public static IEnumerable<string> SelectUserCollections()
+        {
+            using (var db = MyDatabase)
+            {
+                var col = db.GetCollection("$cols");
+                //var cols = col.Find(BsonExpression.Create("$.type = 'user'")).ToList();
+                var cols = col.Find("$.type = 'user'").ToList();
+                var name = "name";
+                foreach (var item in cols)
+                {
+                    yield return $"{item[name]}";
                 }
             }
         }
@@ -118,18 +142,16 @@ namespace XamlBrewer.UWP.LiteDBSample
             }
         }
 
-        public static IEnumerable<string> SelectUserCollections()
+        public static List<Series> SelectWithActors()
         {
             using (var db = MyDatabase)
             {
-                var col = db.GetCollection("$cols");
-                //var cols = col.Find(BsonExpression.Create("$.type = 'user'")).ToList();
-                var cols = col.Find("$.type = 'user'").ToList();
-                var name = "name";
-                foreach (var item in cols)
-                {
-                    yield return $"{item[name]}";
-                }
+                var col = db.GetCollection<Series>("series");
+                return col
+                    .Query()
+                    .Include(s => s.Cast)
+                    .OrderBy(x => x.Name)
+                    .ToList();
             }
         }
 
