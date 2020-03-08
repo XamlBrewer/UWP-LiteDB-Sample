@@ -46,6 +46,35 @@ namespace XamlBrewer.UWP.LiteDBSample
                         ac.Cast = ac.Cast.Append(actor).ToArray();
                         seriesCollection.Update(ac);
                     }
+
+                    // Get Formula1: Drive to survive
+                    var f1 = seriesCollection.FindOne(s => s.Name == "Formula1: Drive to survive");
+
+                    var drivers = new List<Actor>
+                    {
+                        new Actor { Name = "Alex Albon" },
+                        new Actor { Name = "Carlos Sainz" },
+                        new Actor { Name = "Charles Leclerc" }
+                    };
+                    actorsCollection.Upsert(drivers); // It doesn't work without this - without a warning.
+                    f1.Cast = drivers.ToArray();
+                    seriesCollection.Upsert(f1);
+
+                    // Get Rick & Morty
+                    var rm = seriesCollection.FindOne(s => s.Name == "Rick and Morty");
+
+                    var cartoons = new List<Actor>
+                    {
+                        new Actor { Name = "Rick Sanchez" },
+                        new Actor { Name = "Morty Smith" },
+                        new Actor { Name = "Mr. Meeseeks" }
+                    }; 
+                    rm.Cast = cartoons.ToArray();
+                    db.BeginTrans();
+                    actorsCollection.Upsert(cartoons); // Actors added.
+                    seriesCollection.Upsert(rm);
+                    // actorsCollection.Upsert(cartoons); // Actors not added - even inside a transaction the order is important.
+                    db.Commit();
                 }
             }));
         }
@@ -165,6 +194,5 @@ namespace XamlBrewer.UWP.LiteDBSample
                 return new LiteDatabase(filePath);
             }
         }
-
     }
 }

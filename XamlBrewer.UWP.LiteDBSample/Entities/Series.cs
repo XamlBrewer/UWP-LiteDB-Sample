@@ -299,7 +299,48 @@ namespace XamlBrewer.UWP.LiteDBSample.Entities
                     },
                     new Series
                     {
-                        Name = "Rick and Morty"
+                        Name = "Rick and Morty",
+                        Creator = "Adult Swim",
+                        Seasons = new Season []
+                        {
+                            new Season
+                            {
+                                Year = 2019,
+                                Episodes = new Episode[]
+                                {
+                                    new Episode
+                                    {
+                                        Sequence = 1,
+                                        Title = "Edge of Tomorty: Rick Die Rickpeat",
+                                        Description = "Wubba lubba dub dub"
+                                    },
+                                    new Episode
+                                    {
+                                        Sequence = 2,
+                                        Title = "The Old Man and the Seat",
+                                        Description = "Wubba lubba dub dub"
+                                    },
+                                    new Episode
+                                    {
+                                        Sequence = 3,
+                                        Title = "One Crew over the Crewcoo's Morty",
+                                        Description = "Wubba lubba dub dub ... fight"
+                                    },
+                                    new Episode
+                                    {
+                                        Sequence = 4,
+                                        Title = "Claw and Hoarder: Special Ricktim's Morty",
+                                        Description = "Wubba lubba dub dub"
+                                    },
+                                    new Episode
+                                    {
+                                        Sequence = 5,
+                                        Title = "Rattlestar Ricklactica",
+                                        Description = "Wubba lubba dub dub"
+                                    }
+                                }
+                            }
+                        }
                     }
                 };
             }
