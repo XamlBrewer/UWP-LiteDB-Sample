@@ -101,6 +101,22 @@ namespace XamlBrewer.UWP.LiteDBSample
             }
         }
 
+        public static IEnumerable<string> Crud()
+        {
+            using (var db = MyDatabase)
+            {
+                var actors = db.GetCollection<Actor>("actors");
+                var ws = new Actor { Name = "Will Smiff" };
+                actors.Insert(ws);
+                yield return BsonMapper.Global.Serialize(actors.FindAll().Last()).ToString();
+                ws.Name = "Will Smith";
+                actors.Update(ws);
+                yield return BsonMapper.Global.Serialize(actors.FindAll().Last()).ToString();
+                actors.Delete(ws.ActorId);
+                yield return BsonMapper.Global.Serialize(actors.FindAll().Last()).ToString();
+            }
+        }
+
         public static IEnumerable<string> SelectDatabaseProperties()
         {
             using (var db = MyDatabase)

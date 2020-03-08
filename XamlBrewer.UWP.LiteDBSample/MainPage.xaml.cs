@@ -88,6 +88,15 @@ namespace XamlBrewer.UWP.LiteDBSample
             };
 
             WriteLog(" ");
+            WriteLog("Create - Update - Delete");
+            WriteLog("------------------------");
+            var actors = DataLayer.Crud();
+            foreach (var actor in actors)
+            {
+                WriteLog($"* {actor}");
+            };
+
+            WriteLog(" ");
             WriteLog("Done");
             WriteLog(" ");
         }
