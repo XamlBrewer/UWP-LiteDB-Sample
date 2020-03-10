@@ -57,6 +57,13 @@
                     HorizontalAlignment="Stretch"
                     Margin="12"
                     FontFamily="Consolas">Joining documents</Button>
+            <Button Click="FileStorage_Click"
+                    HorizontalAlignment="Stretch"
+                    Margin="12"
+                    FontFamily="Consolas">File Storage</Button>
+            <Image x:Name="SelectedImage"
+                   Margin="12"
+                   VerticalAlignment="Top" />
         </StackPanel>
 
         <!-- Log -->

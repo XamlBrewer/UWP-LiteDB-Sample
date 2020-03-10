@@ -5,6 +5,7 @@ Shows how to embed a LiteDB NoSQL Document Database instance in UWP:
 * Querying metadata.
 * Advanced expression based queries.
 * Joining documents on foreign keys.
+* Using FileStorage for images.
 
 ![Screenshot](Assets/Screenshot.png?raw=true)
 

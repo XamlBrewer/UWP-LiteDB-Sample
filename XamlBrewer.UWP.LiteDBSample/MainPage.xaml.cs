@@ -1,5 +1,7 @@
 ﻿using System;
+using System.IO;
 using Windows.ApplicationModel.Core;
+using Windows.Storage;
 using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -192,6 +194,58 @@ namespace XamlBrewer.UWP.LiteDBSample
         {
             Log.Text += message + Environment.NewLine;
             LogScroll.ChangeView(null, LogScroll.ExtentHeight, null);
+        }
+
+        private async void FileStorage_Click(object sender, RoutedEventArgs e)
+        {
+            var fileId = "$/series/alteredcarbon.jpg";
+
+            WriteLog("File storage");
+            WriteLog("=============");
+            WriteLog(" ");
+            WriteLog("Importing an image");
+            WriteLog("------------------");
+            var path = Path.Combine(Windows.Application­Model.Package.Current.Installed­Location.Path, @"./Assets/AlteredCarbon.jpg");
+            var fileInfo = DataLayer.SaveFile(fileId, path);
+            WriteLog(fileInfo);
+            path = Path.Combine(Windows.Application­Model.Package.Current.Installed­Location.Path, @"./Assets/RickAndMorty.jpg");
+            fileInfo = DataLayer.SaveFile(@"$/series/rickandmorty.jpg", path);
+            WriteLog(fileInfo);
+
+            WriteLog(" ");
+            WriteLog("Querying a folder");
+            WriteLog("-----------------");
+            var files = DataLayer.QueryFolder(@"$/series/");
+            foreach (var file in files)
+            {
+                WriteLog($"  * {file}");
+            }
+
+            WriteLog(" ");
+            WriteLog("Returning an image");
+            WriteLog("------------------");
+            var stream = DataLayer.SelectFile(fileId);
+            stream.Seek(0, SeekOrigin.Begin);
+            var bitmapImage = new Windows.UI.Xaml.Media.Imaging.BitmapImage();
+            await bitmapImage.SetSourceAsync(stream.AsRandomAccessStream());
+            SelectedImage.Source = bitmapImage;
+            WriteLog("<--- look");
+
+            WriteLog(" ");
+            WriteLog("Deleting an image");
+            WriteLog("-----------------");
+            if (DataLayer.DeleteFile(fileId))
+            {
+                WriteLog("file deleted");
+            }
+            else
+            {
+                WriteLog("file not deleted");
+            }
+
+            WriteLog(" ");
+            WriteLog("Done");
+            WriteLog(" ");
         }
     }
 }

@@ -68,7 +68,7 @@ namespace XamlBrewer.UWP.LiteDBSample
                         new Actor { Name = "Rick Sanchez" },
                         new Actor { Name = "Morty Smith" },
                         new Actor { Name = "Mr. Meeseeks" }
-                    }; 
+                    };
                     rm.Cast = cartoons.ToArray();
                     db.BeginTrans();
                     actorsCollection.Upsert(cartoons); // Actors added.
@@ -197,6 +197,52 @@ namespace XamlBrewer.UWP.LiteDBSample
                     .Include(s => s.Cast)
                     .OrderBy(x => x.Name)
                     .ToList();
+            }
+        }
+
+        public static string SaveFile(string fileId, string filePath)
+        {
+            using (var db = MyDatabase)
+            {
+                var fs = db.FileStorage;
+                var fileInfo = fs.Upload(fileId, filePath);
+                return $"Imported {fileInfo.Filename} ({fileInfo.Length} bytes) as {fileInfo.Id}.";
+            }
+        }
+
+        public static IEnumerable<string> QueryFolder(string folder)
+        {
+            using (var db = MyDatabase)
+            {
+                var fs = db.FileStorage;
+                var infos = fs.Find("_id LIKE @0", folder + "%");  // https://github.com/mbdavid/LiteDB/issues/1469
+                if (infos != null)
+                {
+                    foreach (var info in infos)
+                    {
+                        yield return info.Id;
+                    }
+                }
+            }
+        }
+
+        public static Stream SelectFile(string fileId)
+        {
+            using (var db = MyDatabase)
+            {
+                var stream = new MemoryStream();
+                var fs = db.FileStorage;
+                var fileInfo = fs.Download(fileId, stream);
+                return stream;
+            }
+        }
+
+        public static bool DeleteFile(string fileId)
+        {
+            using (var db = MyDatabase)
+            {
+                var fs = db.FileStorage;
+                return fs.Delete(fileId);
             }
         }
 
