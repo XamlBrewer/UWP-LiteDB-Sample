@@ -200,12 +200,14 @@ namespace XamlBrewer.UWP.LiteDBSample
             }
         }
 
-        public static string SaveFile(string fileId, string filePath)
+        public static string SaveFile(string fileId, string filePath, string series)
         {
             using (var db = MyDatabase)
             {
                 var fs = db.FileStorage;
                 var fileInfo = fs.Upload(fileId, filePath);
+                fs.SetMetadata(fileInfo.Id, new BsonDocument { ["series"] = series });
+
                 return $"Imported {fileInfo.Filename} ({fileInfo.Length} bytes) as {fileInfo.Id}.";
             }
         }
@@ -233,6 +235,18 @@ namespace XamlBrewer.UWP.LiteDBSample
                 var stream = new MemoryStream();
                 var fs = db.FileStorage;
                 var fileInfo = fs.Download(fileId, stream);
+                return stream;
+            }
+        }
+
+        public static Stream FindFileByMetadata(string series)
+        {
+            using (var db = MyDatabase)
+            {
+                var stream = new MemoryStream();
+                var fs = db.FileStorage;
+                var fileInfo = fs.Find(x => x.Metadata["series"] == "Altered Carbon").FirstOrDefault();
+                fs.Download(fileInfo.Id, stream);
                 return stream;
             }
         }

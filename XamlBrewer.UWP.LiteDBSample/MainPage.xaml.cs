@@ -206,10 +206,10 @@ namespace XamlBrewer.UWP.LiteDBSample
             WriteLog("Importing an image");
             WriteLog("------------------");
             var path = Path.Combine(Windows.Application­Model.Package.Current.Installed­Location.Path, @"./Assets/AlteredCarbon.jpg");
-            var fileInfo = DataLayer.SaveFile(fileId, path);
+            var fileInfo = DataLayer.SaveFile(fileId, path, "Altered Carbon");
             WriteLog(fileInfo);
             path = Path.Combine(Windows.Application­Model.Package.Current.Installed­Location.Path, @"./Assets/RickAndMorty.jpg");
-            fileInfo = DataLayer.SaveFile(@"$/series/rickandmorty.jpg", path);
+            fileInfo = DataLayer.SaveFile(@"$/series/rickandmorty.jpg", path, "Rick and Morty");
             WriteLog(fileInfo);
 
             WriteLog(" ");
@@ -224,7 +224,8 @@ namespace XamlBrewer.UWP.LiteDBSample
             WriteLog(" ");
             WriteLog("Returning an image");
             WriteLog("------------------");
-            var stream = DataLayer.SelectFile(fileId);
+            // var stream = DataLayer.SelectFile(fileId);
+            var stream = DataLayer.FindFileByMetadata("Altered Carbon");
             stream.Seek(0, SeekOrigin.Begin);
             var bitmapImage = new Windows.UI.Xaml.Media.Imaging.BitmapImage();
             await bitmapImage.SetSourceAsync(stream.AsRandomAccessStream());
