@@ -15,18 +15,18 @@ namespace XamlBrewer.UWP.LiteDBSample.Entities
             {
                 return new Actor[]
                     {
-                        new Actor
-                        {
-                            Name = "Chris Conner"
-                        },
-                        new Actor
-                        {
-                            Name = "Renée Elise Goldsberry"
-                        },
-                        new Actor
-                        {
-                            Name = "Will Yun Lee"
-                        }
+                    new Actor
+                    {
+                        Name = "Chris Conner"
+                    },
+                    new Actor
+                    {
+                        Name = "Renée Elise Goldsberry"
+                    },
+                    new Actor
+                    {
+                        Name = "Will Yun Lee"
+                    }
                     };
             }
         }

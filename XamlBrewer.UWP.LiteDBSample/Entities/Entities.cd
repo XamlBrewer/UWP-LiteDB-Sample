@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="XamlBrewer.UWP.LiteDBSample.Entities.Series">
+    <Position X="1" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAEIAAAAgAAAAAAIAAAQAAAAAAAAAEAABAAAAAAA=</HashCode>
+      <FileName>Entities\Series.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Seasons" />
+      <Property Name="Cast" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="XamlBrewer.UWP.LiteDBSample.Entities.Season">
+    <Position X="3.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Series.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Episodes" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="XamlBrewer.UWP.LiteDBSample.Entities.Episode">
+    <Position X="6" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAEAAAAAAAAAAAAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>Entities\Series.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="XamlBrewer.UWP.LiteDBSample.Entities.Actor">
+    <Position X="3.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAIAAAAAABAAAAAAA=</HashCode>
+      <FileName>Entities\Actor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

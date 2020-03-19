@@ -11,7 +11,7 @@ namespace XamlBrewer.UWP.LiteDBSample
     {
         public static Task Reset()
         {
-            return Task.Run((System.Action)(() =>
+            return Task.Run(() =>
             {
                 using (var db = MyDatabase)
                 {
@@ -76,7 +76,7 @@ namespace XamlBrewer.UWP.LiteDBSample
                     // actorsCollection.Upsert(cartoons); // Actors not added - even inside a transaction the order is important.
                     db.Commit();
                 }
-            }));
+            });
         }
 
         public static List<Series> SelectAll()
